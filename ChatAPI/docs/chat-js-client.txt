@@ -1,0 +1,313 @@
+======= Chat Object Model ========
+
+This document describes the object model of the client-side JS library for communication with the chat server.
+Building UI around the chat library is simple. The library supports all necessary collections such 
+as Contacts, Conversations, and others, and takes care of all communications with the chat server. Building UI using
+this library is similar to data binding, a straightforward task of representing these collections in HTML
+(or another UI framework) using templates or a similar mechanism. In addition to that, the library provides
+a ready-made UI widget that can be used as a simple UI implementation. Using that widget, building a chat is very simple, with very little code.
+
+We use TypeScript notation (class, method, property, types) in the reference below. It does not mean that using
+TypeScript is necessary, it’s just a convenient way of describing class and method signatures.
+The reader is not required to know TypeScript, the notations are self-evident.
+
+## Interface UserProvider 
+
+You must implement this interface so that chat knows the properties of your users (only those relevant to the chat,
+not their private properties, of course).
+
+ interface IUser {
+    id: string;
+    name: string;
+    avatar: string;
+  }
+
+ interface IUserProvider {
+    getContactInfo(id: string): IUser;
+  }
+
+IUserProvider.getContactInfo returns an object with properties listed in the IUser interface.
+User id can be any string that uniquely identifies your users. It can be an id that
+you already use in your system (probably stored in a database) that your code on the client receives from your server
+after your login/authorization process, but in principle this logic is up to you,
+it can be any string as long as you have a mapping from those strings to your actual users and can return
+their chat properties in IUserProvider.getContactInfo.
+
+
+## Class ChatCore
+
+Represents an instance of the chat library. To initialize the library, create a single
+IUserProvider instance, then create a single ChatCore instance with that user provider and the URL of the chat server,
+then create the Conversations and Contacts collections. 
+Once it is done, call ChatCore.login with the id of the current user (user id according to your UserProvider logic).
+The 'login' method has a call back that is called once the login is complete. At this point you can show
+conversations and contacts collections to the user in your UI.
+The chat initialization code (without UI) looks like this:
+
+ChatCore core = new ChatCore(serverUrl, userProvider);
+Conversations conv = new Conversations(core);
+Contacts cont = new Contacts(core);
+core.login(userID, function (err) {
+  if (err) {
+    ...
+  } else {
+    // at this point you can show conversations and contacts collections to the user in your UI
+  }
+});
+
+ChatCore also has a setRelatedList method allowing a client to specify users for whom this client wants to track their online status, receive contactUpdated notification event when their status changes.
+This method is usually needed to keep track of users in a 'recently talked to' list.
+This method has a single parameter, an array of user ids to include in the 'related' ('tracking ') list, and an optional callback.
+
+
+# Simple collection interfaces implemented by collection classes
+
+interface IListItem {
+   id: string;
+}
+interface IList {
+   items: IListItem[];
+   selected: IListItem;
+}
+
+## Class Conversation
+
+Implements IListItem interface.
+
+A conversation contains all messages exchanged between a set of participants. It is not limited in time.
+Once started, it never expires, but it can become dormant for a long time if nobody sends messages to it.
+
+Properties:
+
+core: ChatCore - (read-only) ChatCore instance, object representing the library.
+id: string - (read-only) Unique id.
+last: Date - (read-only) Date/time of the last message in the conversation.
+participants: Patricipant[] - (read-only) all users participating in the conversation, including inactive ones.
+unread: number - (read-write) Number of new (unread) messages in the conversation (for showing in a badge).
+messages: Messages - Messages in the conversation. Includes all recent (starting from a certain date) messages.
+   This collection is initially empty. Filling it is UI code's responsibility.
+   It is filled by calling Messages.init, usually for the conversation currently selected by the user. Once it is initialized,
+   it is automatically maintained during chat session, there is no need to call Messages.init after that.
+props: ConversationProps - Properties of the conversation that can be set by end user. Currently includes name and picture.
+userData: object - (read-only) User data stored with the message (it can be any object, saved with updateUserData method).
+
+
+Client-side methods (not calling the server):
+
+getActiveParticipants(): Participant[] - Returns an array of participants that are currently active, except the current user.
+
+Methods calling the server:
+
+send(message: string, callback) - Send message to the conversation.
+markAsRead(callback) - mark the entire conversation as read.
+addParticipants(userIds: string[], callback) - Add users to the conversation. Users are identified by their user ids (supplied by UserProvider). 
+removeParticipants(userIds: string[], callback) - Make the participant inactive. Participants are never completely removed from a conversation, 
+   instead their state is changed from active to inactive. A user can be re-activated later by calling addParticipants.
+change(props: ConversationProps, callback) - Change properties of the conversation (take values from the 'props' argument)
+   and send that change to the server.
+updateUserData(userData: object, createEvent: boolean, callback) - save user data (which can be any object)
+   with the conversation. Previous user data is overwritten. If createEvent is true, a change event (special message) is added to the conversation.
+
+Note about callbacks: Callback, here and in all other methods calling the server is a function called after the operation
+   is finished on the server. Its first argument contains error code/description in case of a server error or is null if
+   the operation was successful. It can have a second argument representing some object (absent unless specified otherwise).
+
+Events:
+
+Currently, these are jQuery events, here and in other classes. Use jQuery 'on' method to handle events.
+We will probably remove jQuery dependency at some point later, because events is currently the only purpose jQuery is used for
+in this library (it is used in our UI widjet, but that's separate from the core chat library). When we remove jQuery dependency,
+event handling will remain virtually the same, the change will be very small.
+
+changed: some property in props have changed. UI should handle this event to update conversation name and picture
+   (and more properties can be added in the future).
+unreadChanged: Number of unread messages in the conversation has changed (as a result of new messages arriving or when a message is read).
+   UI should handle this event to update the unread messages badge.
+lastChanged: The 'last' property changed (because a new message arrived).
+
+## Class ConversationProps
+
+Properties of the conversation that can be set by the end user.
+You don't have to create objects of this class to fill the 'props' property of a conversation, but you can create
+its objects for use in the Conversation.change method.
+Objects of this class are created automatically, you don't need to create them.
+
+Properties:
+
+name: string - (read-write) Name of the conversation. Absent by default (UI can show a list of participants or any other default name)
+image: string - (read-write) URL of the picture (icon). Absent by default (UI can show some default icon or no icon)
+
+Constructor:
+
+constructor() - You only need to create objects of ConversationProps if you need them for use in the Conversation.change method.
+
+
+## Class Participant
+
+Represents a user as a participant of a conversation. 
+Objects of this class are create automatically, you don't need to create them.
+
+Properties:
+
+id: string - (read-only) User id as supplied by UserProvider.
+active: boolean - (read-write) true, if the user is active. Calling removeParticipants changes this property from true to
+   false making the user inactive. A user can be re-activated later by calling addParticipants.
+
+
+## Class Conversations
+
+Implements IList interface.
+
+Collection of all conversations in which current user participates.
+This collection must be explicitly created in code.
+
+Properties:
+
+items: Conversation[] - (read-only) Conversations, elements of the collection. Don't change this array directly by adding or deleting elements,
+   it is intended only for getting the elements.
+selected: (read-write) - Current conversation, the one currently selected by the user.
+sorted: boolean - (read-write) If set to true (default), the collection is sorted by recency (by 'last' property, descending)
+   and that sort is automatically maintained when the collection changes. Set it to false if you want to implement a different sort.
+initialized: boolean - (read-only) true, if Conversations collection is fully initialized (retrieved from the server).
+
+Constructor:
+
+constructor(core: ChatCore) - This collection must be explicitly created in code.
+
+Client-side methods:
+
+findById(id: string): Conversation - Returns a conversation by its id.
+findByUser(userId: string): Conversation - Returns a conversation by user id of the other participant (one participant is the current user).
+   Note: We will probably change this method to return all such conversations in an arry and not just one of them.
+
+Methods calling the server:
+
+create(userIds: string[], userData: any, callback) - Create a new conversation, with user ids supplied by UserProvider.
+   userData can be any object (can be null), any additional information to be stored with the conversation.
+   Callback's second argument is the created Conversation (element of this collection).
+
+Events:
+
+changed - Collection has changed, elements have been added to it or deleted from it.
+selected - Current conversation selection changed ('selected' property changed).
+
+## Enum MessageType
+
+Message = 0 - a regular, text message.
+Start = 1 - special message sent when a conversation has just been created.
+Change = 2 - properties of the conversation have changed.
+Join = 3 - a user joined the conversation (became active).
+Leave = 4 - a user left the conversation (became inactive).
+
+## Class Message
+
+Implements IListItem interface.
+
+Represents a single message in a conversation. See MessageType enum for the list of possible message types.
+Objects of this class are created automatically, you don't need to create them.
+
+id: string - Unique id.
+type: MessageType - (read-only) Message type.
+text: string - Message text, for regular messages (type=Message). Empty for type=Change.
+   For type=Start/Join/Leave, space-separated list of user ids.
+from: string - (read-only) User id of the user that sent the message.
+date: Date - (read-only) Date/time when the message was sent.
+read: boolean - (read-write) Indicates whether the message was read by the current user. Setting it to false does not change its state on the server. 
+   Use the markAsRead method if you want to change its status on the server.
+fromMe: boolean - (read-only) A convenience property, indicates whether the message was sent by the current user.
+userData: object - (read-only) User data stored with the message (it can be any object, saved with updateUserData method).
+comments(): Message[] - (read-only) Comments (which are also messages) posted for this message by a client calling the Message.comment method.
+
+
+Methods calling the server:
+
+markAsRead(callback) - change the message status to read (both on the client and on the server). Second argument of the callback is the Message itself.
+change(newMessage: string, callback) - edit the message (change its text). New text contains in newMessage.
+comment(comment: string, callback) - add a comment (which is also a Message) to this message.
+updateUserData(userData: object, notifyParticipants: boolean, callback) - save user data (which can be any object) with the message.
+  Previous user data is overwritten. If notifyParticipants is true, participants receive event that the message is updated.
+
+Events:
+
+changed: message text changed as a result of a client calling the Message.change method.
+
+## Class Messages
+
+Implements IList interface.
+
+Collection of the messages in a conversation.
+Objects of this class are created automatically, you don't need to create them.
+
+Properties:
+
+items: Message[] - (read-only) Messages, elements of the collection.
+initialized: boolean - (read-only) Messages were retrieved from the server, there is no nee dto call 'init'.
+sorted: boolean - (read-write) If set to true (default), the collection is sorted by 'last' property, ascending,
+   and that sort is automatically maintained when the collection changes. Set it to false if you want to implement a different sort.
+
+Client-side methods:
+
+findById(id: string): Message - Returns a message by its id.
+
+Methods calling the server:
+
+init(callback) - Get messages from the server. You need to call this method when the conversation is selected first time in the session.
+   After that, there is no need to call it, it'll be maintained automatically.
+   Call this method if the 'initialized' proprty returns false.
+
+Events:
+
+added - one or more messages have been added to the collection as a result of messages sent or received.
+
+
+## Class Contact
+
+Implements IListItem interface.
+
+A record in the Contacts (or friends) list. To initiate a conversation with someone, the user needs to add them to Contacts.
+Objects of this class are created automatically, you don't need to create them.
+
+Properties:
+
+id: string - (read-only) user id of the contact. It's a user id supplied by UserProvider.
+avatar: string - (read-write) URL of the user's avatar (picture).
+online: boolean - (read-write) true, if the user is connected to the chat server at the moment.
+
+Events:
+
+changed - one or more properties of the contact have changed (currently, 'online' or 'avatar')
+
+## Class Contacts
+
+Implements IList interface.
+
+Contacts (or friends) list. To initiate a conversation with someone, the user needs to add them to Contacts.
+This collection must be explicitly created in code.
+
+Constructor:
+
+constructor(core: ChatCore) - This collection must be explicitly created in code.
+
+Properties:
+
+me: Contact[] - (read-only) current user
+items: Contact[] - (read-only) Contacts, elements of the collection.
+selected: Contact - (read-write) Contact currently selected by the user.
+sorted: boolean - (read-write) If set to true (default), contacts list is sorted by user name and that sort is
+   automatically maintained when the collection changes. Set it to false if you want to implement a different sort.
+
+Client-side methods:
+
+findById(id: string): Contact - Returns a contact by its id.
+
+Methods calling the server:
+
+add(userIds: string[], callback) - Add contacts with user ids supplied by UserProvider.
+remove(userIds: string[], callback) - Remove contacts with user ids supplied by UserProvider.
+
+Events:
+
+ready - Current user has been authenticated and its properties are available through the 'me' property.
+changed - Collection has changed, elements have been added to it or deleted from it.
+selected - Current contact selection changed ('selected' property changed).
+

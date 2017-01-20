@@ -1,0 +1,251 @@
+.poly-current .green {
+	border-bottom: 4px solid #00FF00;
+}
+
+.poly-current .red {
+	border-bottom: 4px solid #FF0000;
+}
+
+.poly-current .yellow {
+	border-bottom: 4px solid #FFFF00;
+}
+
+/* guessed words dots */
+.poly-current span.poly-1dot.yellow::before,
+.poly-current span.poly-2dots.yellow::before {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -3px;
+	margin: auto;
+	height: 2px;
+}
+
+.poly-current span.poly-1dot.yellow::before {
+	width: 2px;
+	background: url(1_dot.png) center no-repeat;
+	background-size: contain;
+}
+
+.poly-current span.poly-2dots.yellow::before {
+	width: 6px;
+	background: url(2_dots.png) center no-repeat;
+	background-size: contain;
+}
+/* end-guessed words dots */
+
+.poly-current span.yellow {
+	cursor: pointer;
+	position: relative;
+}
+
+.poly-current .idiom {
+	font-style: italic;
+	text-decoration: underline;
+}
+
+.translateBox {
+	position: absolute;
+	background-color: #FFF;
+	min-width: 300px;
+	max-width: 60%;
+	min-height: 150px;
+	max-height: 60%;
+	height: 150px;
+	z-index: 10000;
+	overflow: hidden;
+}
+
+.translateBox.hidden {
+	visibility: hidden !important;
+}
+
+.translateBox.show {
+	visibility: visible !important;
+}
+
+.translateBox > .poly-box-title {
+	font-size: 22px;
+	color: #333;
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.translateBox .poly-box-grade {
+	font-size: 20px;
+	color: #333;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 20px;
+}
+
+.translateBox .poly-box-list {
+	max-height: 110px;
+	overflow-y: auto;
+	width: 100%;
+}
+
+.translateBox .poly-box-resizeCorner {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+
+	width: 0;
+	height: 0;
+
+	border-left: 8px solid transparent;
+	border-bottom: 8px solid #B6B6B6;
+
+	cursor: nwse-resize;
+}
+
+.translateBox.poly-box-default {
+	border: 1px solid #B6B6B6;
+	border-radius: 3px;
+}
+
+.translateBox.poly-box-default .poly-box-header {
+	height: 40px;
+	overflow: hidden;
+	background-color: #FFF;
+	cursor: pointer;
+	position: relative;
+	border-bottom: 1px solid #B6B6B6;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.translateBox.poly-box-default .poly-box-header > div {
+	height: 100%;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-close{
+	color: #B6B6B6;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-close i {
+	padding: 7px 10px;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-header-word {
+	text-align: center;
+	border-bottom: none;
+	width: 100%;
+	line-height: 40px;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-header-word.green {
+	background-color: #AAFFAA;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-header-word.yellow {
+	background-color: #FFFFAA;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-header-word.red {
+	background-color: #FFAAAA;
+}
+
+.translateBox.poly-box-default .poly-box-header .poly-box-header-word.out-of-vocab {
+	background-color: #FFF;
+}
+
+.translateBox.poly-box-default .poly-box-tabs {
+	height: 30px;
+	background-color: #FFF;
+	overflow: hidden;
+}
+
+.translateBox.poly-box-default .poly-box-idiom {
+	height: 30px;
+	padding: 10px 0px;
+	width: 100%;
+	display: none;
+	background-color: #FFF;
+	text-align: center;
+	text-decoration: underline;
+	font-style: italic;
+	border-bottom: 1px solid #DDD;
+}
+
+.translateBox.poly-box-default .poly-box-idiom.show {
+	display: block;
+	position: static;
+}
+
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-translations {
+	min-width: 35%;
+	height: 100%;
+	text-align: center;
+	padding: 5px 0;
+	float: left;
+
+	background-color: #FFF;
+}
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-translations.poly-tab-translations--full {
+	width: 50%;
+}
+
+.translateBox .poly-tab-grade {
+	/*I am Bond...*/
+	height: 100%;
+	position: absolute;
+	right: 60px;
+	top: 0;
+}
+
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-grade .poly-box-grade {
+	display: inline-block;
+	text-align: center;
+	border-radius: 3px;
+	padding: 2px;
+	border-bottom: none;
+	font-size: 13px;
+}
+
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-grade .poly-box-grade.red {
+	background-color: #FFAAAA;
+}
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-grade .poly-box-grade.yellow {
+	background-color: #FFFFAA;
+}
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-grade .poly-box-grade.green {
+	background-color: #AAFFAA;
+}
+
+.translateBox.poly-box-default .poly-box-tabs .poly-tab-definitions {
+	min-width: 50%;
+	height: 100%;
+	text-align: center;
+	padding: 5px 0;
+	float: right;
+
+	background-color: #AAA;
+	color: #FFF;
+}
+
+.translateBox.poly-box-default .poly-box-list {
+	background-color: #FFF;
+}
+
+.translateBox.poly-box-default .poly-box-list .poly-box-translate {
+	background-color: #FFF;
+	text-align: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #DDD;
+}
+
+.translateBox.poly-box-default .poly-box-list .poly-box-translate:last-child {
+	margin-bottom: 10px;
+}
+
+.poly-ready:hover {
+	border-right: 1px solid #AAA;
+}

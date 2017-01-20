@@ -1,0 +1,130 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.current-user-panel {
+    position: absolute;
+    top: 0px;
+    height: 60px;
+    left: 0;
+    min-width: 250px;
+    border-bottom: solid 1px #E4ECEF;
+    border-right: solid 1px #E4ECEF;
+}
+
+.current-user-avatar {
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.current-user-avatar.no-avatar {
+    background-image: url('../images/no_avatar.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.current-user-name {
+    position: absolute;
+    top: 10px;
+    left: 80px;
+    font-style: italic;
+}
+
+.contacts-panel {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    min-width: 250px;
+    border-right: solid 1px #E4ECEF;
+}
+
+.conversation-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 250px;
+}
+
+.contacts-tabs {
+    height: 100%;
+}
+
+.tab-header {
+    position: relative;
+    float: left;
+    padding: 12px 14px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+.tab-content {
+    background-color: #F5FCFE;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    padding: 0;
+    border-top: solid 1px #D3E6EA;
+}
+
+.tab.active .arrow-up, .tab.active .arrow-up:before {
+    display: block;
+}
+
+.arrow-up {
+    display: none;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    margin-left: -14px;
+    top: -10px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 14px;
+    border-bottom-color: #D3E6EA;
+  }
+
+ .arrow-up:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 13px;
+    top: -12px;
+    left: -13px;
+    border-bottom-color: #F5FCFE;
+    z-index: 2;
+}
+
+.contacts-tabs > .tab.active > .tab-header {
+    color: #0095CC;
+}
+
+.contacts-tabs > .tab.active > .tab-content {
+    z-index: 1;
+}
+
+.contacts-tab {
+
+}
+.recent-tab {
+}
+
+.fill {
+
+}

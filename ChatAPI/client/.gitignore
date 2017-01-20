@@ -1,0 +1,6 @@
+/typings
+/modules
+/javascripts/*.js
+*.map
+*.d.ts
+reference.js

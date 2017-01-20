@@ -1,0 +1,9 @@
+node_modules/
+bower_components/
+built/
+doc/
+tmpBuilt/*
+test/*.d.ts
+.vscode
+.idea/
+npm-debug.log

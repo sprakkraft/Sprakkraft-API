@@ -1,0 +1,148 @@
+﻿
+=== Chat server socket.io interface by example ===
+
+In addition to reading this description, you can actually try any of the described methods using a sample that can be called a 'chat server explorer'. It has a button for every method with a very simple piece of code where you can see how to call the method. You can log in, manage contact list, start a conversation between two (or more) users using this 'chat explorer', send messages, and see events received by your user (including chat messages) shown in a log style on the web page.  Every method opens a prompt saying what arguments it expects. 
+
+The sample code is written in JS with jQuery, and it is very simple, just a few lines for every method. It uses the standard socket.io primitives (there are just two: 'emit' and 'on'), so you can easily translate it to any language with socket.io support.
+
+The code of the 'chat explorer' is in client/test/test.js. 
+
+Let's walk through it:
+
+Open two browser windows with the following URL:
+
+http://lrcmain.brainglass.com:3100/test/test.html
+
+They will be the windows of your two users chatting (you can have more than two users chatting if you want, just open more windows and log more users in).
+
+-- login
+
+Press 'login' for both users and enter their ids at the prompt. The prompt shows 'userId' above the edit box, that;'s the format and description of the arguments it expects. All buttons (methods) have similar prompts. In this case it expects a single argument which is a user id. 
+
+Note: Use 'login', not 'login-linode'. The latter is for our internal use. There are some other buttons there that are not relevant for this version, so just ignore any buttons that are not described here.
+
+In this sample, you can enter anything as your users' ids. In real life, you will have a separate server-side component that we call UserProvider responsible for user ids (which are ids by which our chat server knows your users, they can be some real ids you have for your users or some ids you create specifically for that purpose, it's up to your implementation) and for basic user information (name in the chat, avatar). We'll just use arbitrary strings for user ids, let's just call them user 'a' and user 'b'. So, enter 'a' (without quotes) when you login in the first window, and 'b' in the second window.
+
+Once you log in, you see that a 'contactUpdated' event arrived in the log area of the window (we call it just log below). That event (see its handler in the code: socket.on('contactUpdated',...) allows you to monitor any changes occurring to contacts you are interested in. You can change an online/offline indicator for your contacts (in your contact list) when this event occurs.
+
+When a user logs in or out, users having it in their contact list get an event notification, contactUpdated.
+
+-- logout
+
+The user goes offline.
+
+-- getContactInfo
+
+It gets user info for the user currently logged in (the method itself can get it for any user, it's just that the sample uses currently logged one). There are two properties in user info: name and avatar. They are specified in UserProvider, so they are always empty in this sample because it has no UserProvider (see above about UserProvider).
+
+-- Contact list management: addToContactList, removeFromContactList, getContactList, getContacts
+
+Go ahead, try these buttons. Add any strings for user ids that you want to add or remove to/from your contact list. Some of these buttons take comma-separated string list for user ids.
+getContactList gets the list of contacts (user ids) for the current user.
+getContacts also says whether they are online or not.
+
+When you change contact list, the user gets an event notification, contactListUpdated.
+
+-- startConversation
+
+Enter user id of the user who you want to chat with (or several users, comma-separated).
+So, just enter 'b' in the first window (for user 'a').
+
+-- Conversations: getConversations
+
+Once you started a conversation, try getConversations, you will see that conversation info.
+getConversations has parameters for paging if the number of conversations is big,
+and for search (for example, to find conversations where a given user participates).
+
+Note on startConversation: In this sample, you can press that button any number of times and enter the same user thus creating multiple conversations with the same two particpants. This is possible in some scenarios, but you would probably want to have just one conversation (not limited in time) between two given users. That should be supported on the client. Just use getConversations to check whether a conversation you need already exists, and create a new one only if needed. Note that all information you send to the server is
+not transient, it is stored there in the database permanently, so there is no such thing as 'deleteConversation', once started a conversation never ends.
+
+-- setConversation
+
+The following methods modify a conversation, so they require a conversation id in the 'cvId' edit box. You can set it using the setConversation button
+
+-- updateConversation
+
+This method serves to set conversation properties. There are currently two supported properties: name and picture.
+
+-- addParticipants, removeParticipants
+
+Use these methods to manage the set of participants in a conversation (usually called a group chat).
+
+-- addMessage
+
+This is the main method of the chat: send a message to the conversation.
+
+When a message is sent (or another conversation event occurs, see getEvents), users participating in the conversation get a notification event eventAdded. This notification event also occurs on addParticipants, removeParticipants (because these are also conversation events, see getEvents).
+
+-- getEvents
+
+Gets all events in a conversation. Conversation event is something that occurred in the conversation, so that participants might need to be notified of it. A message is obviously an event, and there are some other events in a conversation: user joined, user left, properties (name, picture) changed. Conversation events are described in my previous documents (but they are called 'messages' instead of 'events'), with an enum for different kinds:
+Message = 0 - a regular, text message.
+Start = 1 - special message sent when a conversation has just been created.
+Change = 2 - properties of the conversation have changed.
+Join = 3 - a user joined the conversation (became active).
+Leave = 4 - a user left the conversation (became inactive)
+
+-- Unread messages (conversation events)
+
+You can get their number (for showing in a 'badge' to attract user's attention) using getUnreadEventCount, and mark the entire conversation as read with markConversationAsRead (so you can remove the badge), or mark individual messages as read with markEventAsRead (every message (=conversation event) has id, so you can address them individually).
+
+When you mark the entire conversation or individual messages as read, participants of the conversation get notification events eventRead, conversationRead.
+
+
+-- analyzeText
+
+Enter some Swedish text (ignore two optional arguments shown by the dialog in the sample, you don't need them).
+You will get a JSON string in response where the text is tokenized, lemmatized, part-of-speech tagged, and vocabulary words (about 10,000 most common Swedish words) assigned one of six grades from 1 to 6.
+
+Example for the text 'Han hade varit här varenda sommar i hella sitt liv': 
+[{"lemma":"han","token":"Han","tag":"PN","grade":1,"pos":"PR"},{"colloc":[{"lemma":"ha","token":"hade","tag":"VB","grade":1},{"lemma":"vara","token":"varit","tag":"VB","grade":1}]},{"token":"här","tag":"AB","grade":1,"pos":"RB"},{"token":"varenda","tag":"DT","pos":"PR"},{"token":"sommar","tag":"NN","grade":1},{"token":"i","tag":"PP","grade":1,"pos":"IN"},{"lemma":"hel","token":"hela","tag":"JJ","grade":1},{"lemma":"sin","token":"sitt","tag":"PN","grade":1,"pos":"PR"},{"token":"liv","tag":"NN","grade":1},{"token":".","tag":" MAD ","grade":-1,"sentenceEnd":""}]
+
+token: The original word exactly how it occurs in the text.
+lemma: Base (dictionary) form of the word.
+pos: Part of speech. If 'pos' property is absent, use 'tag' property instead. Part of speech codes:
+     NN: noun
+     VB: verb
+     JJ: adjective
+     RB: adverb
+     PR: pronoun
+     UH: interjection
+     IN: preposition
+     CC: conjunction
+     RP: particle
+     CD: numeral
+tag: More detailed information about part of speech. Ignore it, it is for internal use.
+grade: level (measure of difficulty) of the word according to CEFR (Common European Framework of Reference for Languages).
+     Levels from 1 to 6. Absence of the grade property means that the word is in our dictionary but not
+     in CEFR vocabularty (which contains about 10,000 common Swedish words).
+     grade=-1 means that the word is not in our dictionary.
+'colloc' or 'idiom': properties grouping several words in a phrase (represented by an array of tokens).
+     'idiom' means that this phrase (expression) is in our dictionary (stable, standard dictionary expression).
+     'colloc' (collocation) means that the phrase is not stable (standard) enough to warrant inclusion in dictionary, but is common enough in Swedish usage.
+
+Note: Don't rely on all words in the original text being present in the analysis returned from analyzeText.
+For example, if you want to use analysis for highlighting words in the original text, displaying that text using only the analysis (by concatenating the tokens) is not recommended. It will work correctly in most cases, because usually all words form the original text are present in the analysis, but tokenization algorithm in analysis is statistical, not perfect, and there are some rare cases, especially when uncommon characters or symbols are used in the text, where some words present in the original text may be missing in the analysis. The right way to use the analysis is to scan the original text and the analysis in parallel so you can apply analysis information to the original text. In JavaScript environment, we have an open source code that does such scan and highlights words in the original text, canned textAnalysis widget. In other languages, it is not hard to write code scanning the original text in parallel with analysis.
+
+-- translateText
+
+Enter a Swedish word, part of speech, and language to which you want it translated, get translation in response.
+List of the languages we support in toLanguage:
+
+en: English
+sq: Albanian
+ar: Arabic
+bs: Bosnian
+hr: Croatian
+fa: Farsi
+fi: Finnish
+el: Greek
+ku-lat: Kurdish (Latin script)
+ku-ar: Kurdish (Arabic script)
+ru: Russian
+sr-cyr: Serbian (Cyrillic script)
+sr-lat: Serbian (Latin script)
+so: Somali
+es: Spanish
+tr: Turkish
+az: Azerbaijani

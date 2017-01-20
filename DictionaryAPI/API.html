@@ -1,0 +1,104 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h1><a id="Dictionary_API_0"></a>Dictionary API</h1>
+<p>The API analyzes Swedish sentences and translates individual words and phrases to the following languages:</p>
+<p>English, Albanian, Arabic, Bosnian, Croatian, Farsi, Finnish, Greek, Kurdish, Russian, Serbian, Somali, Spanish, Turkish, Azerbaijani.</p>
+<h3><a id="URL_6"></a>URL:</h3>
+<p><a href="http://lrcmain.brainglass.com/">http://lrcmain.brainglass.com/</a></p>
+<h3><a id="Authorization_10"></a>Authorization:</h3>
+<p>see explanation and examples in server.js</p>
+<h2><a id="Analyze_GET_request_14"></a>Analyze GET request</h2>
+<h3><a id="Path_16"></a>Path</h3>
+<p>analyze/text-data</p>
+<h3><a id="Options_20"></a>Options</h3>
+<p><em>text</em>: Swedish text. Usually, a sentence or a paragraph.</p>
+<h3><a id="Response_JSON_24"></a>Response JSON</h3>
+<pre><code class="language-javascript">{
+    textData: {
+        analyzed: [
+            word1, word2,...
+        ]
+    }
+}
+</code></pre>
+<p>where a word is either an object describing a single word (token):</p>
+<pre><code class="language-javascript">{
+    lemma: string,
+    token: string,
+    tag: string,
+    pos: string,
+    grade: number
+}
+</code></pre>
+<p>or an object describing a phrase (sequence of words), which can be an idiom or a collocation:</p>
+<pre><code class="language-javascript">{
+    idiom: [word1, word2, ...]
+}
+</code></pre>
+<pre><code class="language-javascript">{
+    colloc: [word1, word2, ...]
+}
+</code></pre>
+<p>A word inside an idiom or a collocation is a word object as described above (it cannot be an idiom or a collocation; nesting of phrases is not allowed).</p>
+<h4><a id="Properties_of_a_word_object_58"></a>Properties of a word object:</h4>
+<h4><a id="token_60"></a>token:</h4>
+<p>The original word exactly as it occurs in the text.</p>
+<h4><a id="lemma_63"></a>lemma</h4>
+<p>Base (dictionary) form of the word.</p>
+<h4><a id="pos_66"></a>pos</h4>
+<p>Part of speech. If <em>pos</em> property is absent, use <em>tag</em> property instead. Part of speech codes:</p>
+<pre><code> NN: noun  
+ VB: verb  
+ JJ: adjective  
+ RB: adverb  
+ PR: pronoun  
+ UH: interjection  
+ IN: preposition  
+ CC: conjunction  
+ RP: particle  
+ CD: numeral  
+</code></pre>
+<h4><a id="grade_80"></a>grade</h4>
+<p>Level (measure of difficulty) of the word according to CEFR (Common European Framework of Reference for Languages).
+Levels ARE NUMBERS from 1 to 6. Absence of the grade property means that the word is in our dictionary but not
+in CEFR vocabularty (which contains about 10,000 common Swedish words).<br>
+grade=-1 means that the word is not in our dictionary.</p>
+<h4><a id="Response_example_for_the_text_Han_hade_varit_hr_varenda_sommar_i_hella_sitt_liv_86"></a>Response example for the text ‘Han hade varit här varenda sommar i hella sitt liv’:</h4>
+<p>[{“lemma”:“han”,“token”:“Han”,“tag”:“PN”,“grade”:1,“pos”:“PR”},{“colloc”:[{“lemma”:“ha”,“token”:“hade”,“tag”:“VB”,“grade”:1},{“lemma”:“vara”,“token”:“varit”,“tag”:“VB”,“grade”:1}]},{“token”:“här”,“tag”:“AB”,“grade”:1,“pos”:“RB”},{“token”:“varenda”,“tag”:“DT”,“pos”:“PR”},{“token”:“sommar”,“tag”:“NN”,“grade”:1},{“token”:“i”,“tag”:“PP”,“grade”:1,“pos”:“IN”},{“lemma”:“hel”,“token”:“hela”,“tag”:“JJ”,“grade”:1},{“lemma”:“sin”,“token”:“sitt”,“tag”:“PN”,“grade”:1,“pos”:“PR”},{“token”:“liv”,“tag”:“NN”,“grade”:1},{“token”:&quot;.&quot;,“tag”:&quot; MAD “,“grade”:-1,“sentenceEnd”:”&quot;}]</p>
+<h2><a id="Translate_GET_request_90"></a>Translate GET request</h2>
+<h3><a id="Path_92"></a>Path</h3>
+<p>dictionary/translation</p>
+<h3><a id="Options_96"></a>Options</h3>
+<p><em>word</em>: The original word exactly as it occurs in the text (empty if a phrase is translated).</p>
+<p><em>lemma</em>: Base (dictionary) form of the word (empty if a phrase is translated).</p>
+<p><em>partOfSpeech</em>: Part of speech. See list of part of speech codes above. Empty if a phrase is translated.</p>
+<p><em>phrase</em>: Phrase to translate (empty is a single word is translated).</p>
+<p><em>toLanguage</em>: Target language.  Default ‘en’. Format: ISO-693-1.</p>
+<h3><a id="Response_JSON_108"></a>Response JSON</h3>
+<p>For translating a single word:</p>
+<pre><code class="language-javascript">{
+    translation: {
+        word: {
+                trans: [<span class="hljs-string">"translation1"</span>, <span class="hljs-string">"translation2"</span>, ...],
+                gotPos: <span class="hljs-string">"POS code"</span>,
+                orig: <span class="hljs-string">"original-word"</span>
+        }
+    }
+}
+</code></pre>
+<p>Returned <em>gotPos</em> can be different from the passed <em>partOfSpeech</em> if there is no exact match with partOfSpeech in the dictionary but there is a match for the same word with a different part of speech.</p>
+<p>For translating a phrase:</p>
+<pre><code class="language-javascript">{
+    translation: {
+        phrase: {
+            trans: [<span class="hljs-string">"translation of the phrase"</span>],
+            orig: <span class="hljs-string">"original phrase"</span>
+        }
+    }
+}
+</code></pre>
+<h4><a id="Response_example_for_a_single_word_135"></a>Response example for a single word:</h4>
+<p>{“translation”:{“word”:{“trans”:[“video, video recording”,“picture, video”],“gotPos”:“NN”,“orig”:“video”}}}</p>
+<h4><a id="Response_example_for_a_phrase_139"></a>Response example for a phrase:</h4>
+<p>{“translation”:“phrase”:{“trans”:[“this”],“orig”:“det här”}}</p>
+
+</body></html>

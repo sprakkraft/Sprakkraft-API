@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h2><a id="Overview_0"></a>Overview</h2>
+<p>This is a non-visual widget that can connect to any block/paragraph of HTML on a web page,
+send its text to a server that uses Dictionary API for analysis and, upon receiving response
+from the server, highlight words in the text according to their properties in the analyzed result.
+It also includes a visual widget, a popup showing translations of words and phrases when the user clicks/taps them.</p>
+<p>For more details, see <a href="http://API.md">API.md</a> and <a href="http://WIDGET.md">WIDGET.md</a></p>
+<h2><a id="Installation_9"></a>Installation</h2>
+<p>We tested this on Linux, Windows and Mac OS X.</p>
+<ul>
+<li>
+<p>This repository contains both TypeScript sources (.ts) and compiled JavaScript sources (.js),
+so you don’t need TypeScript compiler if you just want to use them. But if you need to change and recompile them,
+make sure TypeScript is installed on the machine. These sources were tested with TypeScript 1.7.5.</p>
+</li>
+<li>
+<p>Make sure node.js is installed on the machine.</p>
+</li>
+<li>
+<p>Install Bower if it’s not already installed:</p>
+<p>npm install -g bower</p>
+</li>
+<li>
+<p>Get dependencies, compile, and run:</p>
+<p>npm install
+bower install
+npm start</p>
+</li>
+</ul>
+<p><em>npm start</em> compiles the source and starts sample server. If the sources werten’t changed so they don’t need to be compiled,
+you can start the server simply with</p>
+<p>npm server</p>
+<p>The server is listening on port 3200.</p>
+<h2><a id="Opening_samples_36"></a>Opening samples</h2>
+<p>Start the server and open the following URL in your browser:</p>
+<p><a href="http://localhost:3200/samples/">http://localhost:3200/samples/</a></p>
+<h2><a id="More_information_41"></a>More information</h2>
+<p>See <a href="http://API.md">API.md</a> and <a href="http://WIDGET.md">WIDGET.md</a></p>
+
+</body></html>

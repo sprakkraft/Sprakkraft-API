@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Book</title>
+<link rel="stylesheet" href="/styles/style.css" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+</head>
+<script src="/bower_components/axios/dist/axios.js" type="text/javascript"></script>
+<script src='/built/parser.js' type="text/javascript"></script>
+<body style='background: rgb(250,250,250);margin:10px'>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 style="text-align:left"> Swedish Text Analysis and Translation Widget > Book Mode </h2>
+                <hr/>
+                <h3 style="text-align:left"> Parsing large text </h3>    
+            </div>
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <pre>
+var poly = new PolyWidget();
+poly.parseBook();
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <hr/>
+</div>
+<div>Click any paragraph below to see it analyzed and highlighted.</div>
+<hr/>
+<div>Click any word in a highlighted paragraph to see translation of words and phrases</div>
+<hr/>
+<div id='book'>
+    <p>Du har s&auml;kert h&ouml;rt talas om &rdquo;Simon och ekarna&rdquo; av Marianne Fredriksson. Filmatiseringen har f&aring;tt bra kritik, men boken som filmen baseras p&aring; &auml;r en b&auml;sts&auml;ljare som faktiskt blivit klassad som en av de 100 b&auml;sta b&ouml;ckerna i v&auml;rlden (!). &Auml;r den v&auml;rd titeln?</p>
+
+    <p>Marianne Fredriksson f&ouml;ddes i &aring;r 1927 och var en svensk f&ouml;rfattare och journalist. Hon debuterade &aring;r 1980 med &rdquo;Evas Bok&rdquo;. Hon skrev femton romaner som finns &ouml;versatta till 47 olika spr&aring;k. Marianne f&ouml;ddes och v&auml;xte upp i ett hus p&aring; L&aring;ngered i G&ouml;teborg, och det &auml;r ocks&aring; h&auml;r som &rdquo;Simon och Ekarna&rdquo; utspelar sig.</p>
+
+    <p>Boken handlar om Simon och hans tankar kring livet p&aring; v&auml;g mot vuxenv&auml;rlden. Det &auml;r 1940 och mitt i ett v&auml;rldskrig. Ber&auml;ttelsen b&ouml;rjar n&auml;r Simon &auml;r 11 &aring;r. Han &auml;r ett judiskt adoptivbarn, men vet &auml;nnu inte om det sj&auml;lv. Han lever i en arbetarfamilj men f&aring;r &auml;nd&aring; m&ouml;jlighet att l&auml;sa p&aring; l&auml;roverket d&auml;r han tr&auml;ffar Isak, som kommer fr&aring;n en rik, judisk familj. Pojkarna och deras familjer kommer att betyda mycket f&ouml;r varandra i framtiden. &rdquo;Simon och ekarna&rdquo; &auml;r en str&auml;ckl&auml;sningsbok som tar upp viktiga och sv&aring;ra fr&aring;gor i livet, men ocks&aring; hur relationer till v&aring;ra n&auml;ra och k&auml;ra p&aring;verkar oss.</p>
+
+    <p>I boken f&aring;r vi m&ouml;ta m&aring;nga huvudkarakt&auml;rer och bikarakt&auml;rer. Jag m&aring;ste s&auml;ga att jag fastnar mest f&ouml;r Karin, Simons adoptivmamma. Hon &auml;r den som styr familjen, och hon g&ouml;r det med v&auml;rme och k&auml;rlek, trots att hon har m&aring;nga sv&aring;ra minnen kvar fr&aring;n sin barndom. I slutet av boken h&auml;nder saker som g&ouml;r att Karin f&ouml;r en g&aring;ngs skull bara f&aring;r sig sj&auml;lv att t&auml;nka p&aring;. Hon som alltid satt alla andra f&ouml;re sig sj&auml;lv. Symboliken visar tydligt att Karin nu k&auml;nner att hon gjort sitt och sl&auml;pper taget om hennes familj. Jag tycker att det &auml;r v&auml;ldigt fint! Det h&auml;r &auml;r en s&aring;dan typ av bok som man l&auml;ser, ber&ouml;rs av, och sedan inte riktigt kan f&aring; ur huvudet. Det resulterar i att man, n&aring;gra m&aring;nader efter man l&auml;st ut boken, b&ouml;rjar l&auml;sa om den och d&aring; uppt&auml;cker de sm&aring; detaljerna som man missade f&ouml;rsta g&aring;ngen.</p>
+
+    <p>Jag tycker att boken kan l&auml;sas av alla &aring;ldersgrupper. Oavsett hur gammal man &auml;r, s&aring; har boken n&aring;got att ge en. &Auml;r boken v&auml;rld sin plats p&aring; listan? Det tycker jag absolut!</p>
+
+    <p>Anna Molin NV10Ri</p>
+
+    <p> K&auml;nslan av att inte h&ouml;ra hemma n&aring;gonstans Simon och ekarna &auml;r en bok fr&aring;n listan &rdquo;De 100 b&auml;sta b&ouml;ckerna&rdquo;, gjord av v&auml;rldsbiblioteket, som skapats av tidningen Boken. Den har &auml;ven filmatiserats &aring;r 2011. Boken utspelar sig under andra v&auml;rldskriget i Sverige d&auml;r vi f&aring;r f&ouml;lja Simon och hans familj. Det &auml;r en arbetar familj p&aring; landsbygden som ser ut att vara en vanlig familj, men som d&ouml;ljer en hemlighet, Simon &auml;r n&auml;mligen adopterad. Han vet sj&auml;lv inte om det och dessutom var hans far jude, d&auml;rf&ouml;r lever han i farliga f&ouml;rh&aring;llanden under kriget. Simon k&auml;nner ingen st&ouml;rre samh&ouml;righet med sin familj och b&ouml;rjar skolan mot sin fars vilja, d&auml;r han tr&auml;ffar juden Isak. Isak blir en n&auml;ra v&auml;n till Simon och i boken f&aring;r man f&ouml;lja dem genom livets med och motg&aring;ngar.</p>
+
+    <p>Denna bok skildrar hur det var att leva i Sverige under kriget. Trots att Sverige inte var med i kriget fanns det st&auml;ndigt en r&auml;dsla f&ouml;r nazisterna och soldaterna som passerade landet. Boken speglar &auml;ven k&auml;nslan av att inte h&ouml;ra hemma n&aring;gonstans v&auml;ldigt bra, f&ouml;r det &auml;r precis vad Simon k&auml;nner. Han bor i en lycklig familj, men &auml;nd&aring; k&auml;nner han sig ensam och s&ouml;ker st&auml;ndigt svar p&aring; mycket i livet. Han hittar svar i naturen och musiken, f&ouml;r att han har en koppling till dem. Inte heller i skolan k&auml;nner han sig hemma d&auml;r han &auml;r den enda pojken fr&aring;n en arbetarfamilj. Att han &auml;r vilsen g&ouml;r att han drar sig till onda m&auml;nniskor, s&auml;rskilt tjejer, som behandlar honom illa. Men p&aring; n&aring;got s&auml;tt tror jag att han k&auml;nner sig levande p&aring; grund av deras ondska och dras till dem f&ouml;r att ha kontroll och d&aring; kunna skydda sig mot dem.</p>
+
+    <p>Om jag ska ge boken n&aring;gon negativ kritik skulle det vara att det i slut&auml;ndan finns l&ouml;sningar p&aring; alla problem. Visst, det &auml;r en p&aring;hittad ber&auml;ttelse och s&aring;dana slutar oftast bra, men om man ist&auml;llet reflekterar till det verkliga livet finns det inte alltid l&ouml;sningar p&aring; alla problem, s&auml;rskilt inte i s&aring;dana situationer som den h&auml;r boken utspelar sig i. Om man visade det i b&ouml;cker skulle folk inse att livet inte &auml;r p&aring; topp j&auml;mt och jag tror det skulle f&aring; boken skulle bli mer levande.</p>
+
+    <p>Det finns som sagt mycket att diskutera och fundera p&aring; kring denna bok, men jag tycker ni kan f&aring; l&auml;sa den sj&auml;lva och skaffa er en egen uppfattning, f&ouml;r jag rekommenderar den verkligen. Den har en ber&ouml;rande historia som bidrar till mycket att fundera &ouml;ver. Den &auml;r l&auml;tt att ta sig igenom, ungef&auml;r trehundra sidor och har ett l&auml;ttl&auml;st och m&aring;lande spr&aring;k. Enligt mig f&ouml;rtj&auml;nar den en plats p&aring; listan med de 100 b&auml;sta b&ouml;ckerna.</p>
+
+    <p>Paulina Hahne, NV10Ri</p>
+
+    <p> Har du l&auml;st &rdquo;Simon och ekarna&rdquo;? Marianne Fredriksson heter f&ouml;rfattarinnan bakom boken som &auml;r en av hennes 15 romaner. Jag hade h&ouml;ga f&ouml;rv&auml;ntningar innan jag b&ouml;rjade l&auml;sa eftersom boken varit ett &rdquo;hett samtals&auml;mne&rdquo; &auml;nda sedan den filmatiserades. Ber&auml;ttelsen f&aring;ngade mig direkt! Det som m&aring;nga kanske inte vet &auml;r att &rdquo;Simon och ekarna&rdquo; finns med p&aring; en lista &ouml;ver de 100 b&auml;sta b&ouml;ckerna i v&auml;rlden. Det tycker jag verkligen att den f&ouml;rtj&auml;nar!</p>
+
+    <p>Handlingen utspelar sig under andra v&auml;rldskriget och vi f&aring;r f&ouml;lja med Simon Larsson p&aring; resan fr&aring;n pojke till man. Ut&aring;t sett &auml;r Simons familj en lycklig familj men hemligheter bubblar under ytan. Mamma Karin st&ouml;ttar sin son i allt han tar sig f&ouml;r och &ouml;ver&ouml;ser honom med sin varma k&auml;rlek. Pappa Erik visar d&auml;remot inte s&aring; mycket k&auml;nslor och har sv&aring;rt att hitta gemensamma intressen med sin son. Simon &auml;r en smart pojke som &auml;lskar att l&auml;sa, helst sittandes ihopkrupen uppe i sina &auml;lskade ekar eftersom han ofta k&auml;nner sig annorlunda och utanf&ouml;r. Simon b&ouml;rjar skolan och tr&auml;ffar Isak som &auml;r jude. Pojkarna blir snabbt b&auml;sta v&auml;nner men &auml;ven deras f&ouml;r&auml;ldrar l&auml;r k&auml;nna varandra och b&ouml;rjan p&aring; en stark v&auml;nskap tar fart. Det v&auml;xande judehatet skr&auml;mmer Isaks familj och &auml;ven Simons f&ouml;r&auml;ldrar oroar sig. F&ouml;r vad Simon sj&auml;lv inte vet, &auml;r att han egentligen &auml;r adopterad och son till en jude&#8230; Hemligheten &auml;r obekv&auml;m att avsl&ouml;ja och de psykiska p&aring;frestningarna blir stora. Isak och Simon brottas med fr&aring;gor om tillh&ouml;righet och identitet i denna roman d&auml;r sorg, r&auml;dsla och k&auml;rlek &auml;r huvudingredienserna.</p>
+
+    <p>&rdquo;Simon och ekarna&rdquo; &auml;r en vacker, gripande och sorglig bok som ber&ouml;r och d&auml;rf&ouml;r k&auml;nns det r&auml;tt sj&auml;lvklart att den kl&auml;ttrat upp p&aring; listan &ouml;ver de 100 b&auml;sta b&ouml;ckerna. Spr&aring;ket &auml;r l&auml;tt att ta till sig med m&aring;lande beskrivningar av b&aring;de personer och milj&ouml;er. Som ton&aring;ring upplever jag att boken v&auml;cker m&aring;nga tankar och funderingar eftersom f&ouml;rfattarinnan Marianne Fredriksson tar upp &auml;mnen som &auml;r aktuella &auml;ven idag. Det &auml;r nog en av anledningarna till varf&ouml;r hennes b&ouml;cker blivit s&aring; omtyckta. Ber&auml;ttelsen visar hur brutal verkligheten kan vara men den visar ocks&aring; att livet kan inneh&aring;lla m&aring;nga stunder av lycka och gl&auml;dje. &rdquo;Simon och ekarna&rdquo; &auml;r en bok som alla borde l&auml;sa. S&aring; om du inte l&auml;st den tycker jag att du ska pallra dig iv&auml;g till n&auml;rmaste bibliotek och l&aring;na den p&aring; en g&aring;ng!</p>
+
+    <p>Gabriella Ruborg, NV10Ri</p>
+
+    <p> Bland ekarnas armar, d&auml;r h&ouml;r jag hemma P&aring; listan &ouml;ver de &rsquo;&rsquo;100 b&auml;sta b&ouml;ckerna&rsquo;&rsquo; hittar vi en av Marianne Fredrikssons mest omtyckta b&ouml;cker, som nyligen &auml;ven blivit filmatiserad, Simon och ekarna.</p>
+
+    <p>Simon Larsson trivs b&auml;st bland ekarnas v&auml;ldiga tr&auml;dkronor, d&auml;r fantasin f&aring;r fl&ouml;dafritt. Han l&auml;ngtar bort fr&aring;n den G&ouml;teborska landsbygden in till staden, och n&auml;r han f&aring;r b&ouml;rja p&aring; l&auml;roverket l&auml;mnar Simon barndomen bakom sig. P&aring; l&auml;roverket tr&auml;ffarhan Isak. Isak och hans far, Ruben, f&aring;r en betydande del i hans uppv&auml;xt och framtid. N&auml;r andrav&auml;rldskriget bryter ut lever Sverige i skr&auml;ck f&ouml;r nazisterna, v&auml;nskapsband blir starkare medan de djupaste hemligheterna flyter upp mot ytan.</p>
+
+    <p>Marianne har skrivit en gripande och k&auml;nslosam roman om en familjs vardag i Sverige under andrav&auml;rldskriget, d&auml;r Simon och hans letande efter vem han &auml;r och vad han egentligen tillh&ouml;r st&aring;r i centrum. Boken &auml;r skriven p&aring; ett enkelt spr&aring;k med inslag av &auml;ldre svenska, som st&auml;mmer &ouml;verens med den tid som hon beskriver. Historien utspelar sig under ca tolv &aring;rs tid och tar b&ouml;rjan 1940 n&auml;r Simon &auml;r tolv &aring;r gammal, i takt med bokens g&aring;ng blir Simon allt &auml;ldre.</p>
+
+    <p>Simon och ekarna ber&ouml;rde mig k&auml;nslom&auml;ssigt, Marianne blandar realism med fantasi p&aring; ett s&aring;dant s&auml;tt som g&ouml;r att l&auml;saren f&ouml;rs in i en magisk v&auml;rld samtidigt som man blir kvar i verklighetens vardag. Det jag tyckte var b&auml;st med boken var att den var s&aring; of&ouml;ruts&auml;gbar, man visste aldrig vad som skulle komma d&auml;rn&auml;st, vilket gjorde den sp&auml;nnande men samtidigt l&auml;tt att l&auml;sa.</p>
+
+    <p>Jag tycker absolut att det &auml;r en l&auml;sv&auml;rd bok och att den f&ouml;rtj&auml;nar att st&aring; med p&aring; listan &ouml;ver de &rsquo;&rsquo;100 b&auml;sta b&ouml;ckerna&rsquo;&rsquo;, just f&ouml;r att det &auml;r en verkligt magnifik ber&auml;ttelse med dess ober&auml;kneliga inslag. S&aring; l&auml;s den ni som inte gjort det, ta er tiden, den &auml;r m&ouml;dan v&auml;rd.</p>
+
+    <p>Emma &Ouml;hrling, NV10Ri</p>
+</div>
+
+<script>
+    var poly = new PolyWidget();
+    poly.parseBook();
+</script>
+
+</body>
+</html>

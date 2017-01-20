@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h2><a id="Overview_1"></a>Overview</h2>
+<p>This is a non-visual widget that can connect to any block/paragraph of HTML on a web page, send its
+text to a server that uses Dictionary API for analysis and, upon receiving response from the server,
+highlight words in the text according to their properties in the analyzed result:</p>
+<ul>
+<li>Idioms and collocations (phrases) can be highlighted. Default highlight for phrases: italic
+underlined.</li>
+<li>Compound words can be highlighted (default: underline), and parts of the compound can be
+highlighted to make part split visual.</li>
+<li>CEFR grade (importance for the learner) can be used to highlight words according to their
+importance. Default: three levels of importance according to the user’s level (level specified as a
+widget’s setting, from 1 to 6) – green for words below the user’s level (meaning the user
+probably already knows them), yellow for words on the user’s level (recommended to learn),
+red for words above the user’s level (maybe look up to understand the meaning of the sentence
+but don’t try to memorize them).</li>
+</ul>
+<p>It also includes a visual widget, a popup showing translations of words and phrases when the user clicks/taps
+them. If the word is inside a phrase, both word and phrase translation is shown.
+It also shows the CEFR grade of the word (optionally) highlighted with corresponding color customizable
+with styles.</p>
+<p>The code is open source and free for any use. It is fully customizable with styles for appearance,
+and with code if needed.</p>
+<h2><a id="Usage_25"></a>Usage</h2>
+<p>Instantiate <em>PolyWidget</em> with a config object, for example</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> config = {
+        element: *HTML element*
+    }
+}
+<span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> PolyWidget(config);
+</code></pre>
+<p>If <em>element</em> property is included in config at this time, parsing (ananlyzing text and highlighting) starts immidiately.
+Otherwise, call the <em>parser.parse(element)</em> method:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> PolyWidget();
+parser.parse(*HTML element*)
+</code></pre>
+<p>See below for the full list of config options.</p>
+<p>If you need different config options for different <em>parse</em> calls, you can pass a config object to each <em>parse</em> call:</p>
+<pre><code class="language-javascript">parser.parse(*HTML element*, config);
+</code></pre>
+<h2><a id="Book_mode_50"></a>Book mode</h2>
+<p>It is called ‘book mode’ because it is intended for large tests, like books, that can’t be
+parsed at once and don’t have a simple natural division into small blocks.
+In this mode, parsing is performed where the user clicked (nearest block element containing the click point).</p>
+<p>To use this mode, set <em>book</em> property to <em>true</em> in the config object:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> config = {
+    element: *html element*,
+    book: <span class="hljs-literal">true</span>
+}
+<span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> PolyWidget(config);
+</code></pre>
+<h2><a id="Parsing_blocks_65"></a>Parsing blocks</h2>
+<p>There are also two options, specified in the config object, for dividing text into smaller blocks for parsing.
+You can specify a tag name for such elements, or use an attribute to mark such elements.
+There are two samples demonstrating that.</p>
+<h2><a id="Parsing_contentEditable_elements_71"></a>Parsing contentEditable elements</h2>
+<p>There is special support for input, textarea and any other contentEditable elements, so you can
+highlight and translate words while the user is typing them.</p>
+<p>Use <em>parser.startParseEditable(element, config)</em> to start parsing while the user types,
+and <em>parser.stopParseEditable()</em> to stop it:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> parser = <span class="hljs-keyword">new</span> PolyWidget({...});
+parser.startParseEditable(*html element*, {});
+...
+...
+parser.stopParseEditable();
+</code></pre>
+<h2><a id="Config_Options_see_IConfig_in_interfacests_87"></a>Config Options (see IConfig in interfaces.ts)</h2>
+<pre><code class="language-javascript">    <span class="hljs-comment">/** Element to work with */</span>
+        element?: HTMLElement,
+    <span class="hljs-comment">/** 'Book' mode: block for parsing is determined by where the user clicked */</span>
+        book?: boolean,
+    <span class="hljs-comment">/** Attribute mode: blocks for parsing are determined by splitting at the elements having this attribute */</span>
+        blockSeparator?: string,
+    <span class="hljs-comment">/** Tag mode: blocks for parsing are elements having this tag name */</span>
+        tagSeparator?: string,
+    <span class="hljs-comment">/** Sets the language to translate to (ISO-693-1 format). Default 'en'. */</span>
+        toLang?: string,
+    <span class="hljs-comment">/** The user's CEFR level of language knowledge. Number from 1 to 6. Default: 1.
+     *  Words on this level are highlighted yellow, below it - green, above it - red */</span>
+        level?: string,
+    <span class="hljs-comment">/** Names for classes and attributes, if defaults need to be changed */</span>
+        styles?: IStyles,
+</code></pre>
+<h2><a id="Samples_106"></a>Samples</h2>
+<p>To try samples in the <em>samples</em> directory, start the server:</p>
+<p>npm start</p>
+<p>or, if .js files are already compiled</p>
+<p>node server.js</p>
+<p>and open the browser at</p>
+<p><a href="http://localhost:3200/samples/">http://localhost:3200/samples/</a></p>
+
+</body></html>

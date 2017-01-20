@@ -1,0 +1,22 @@
+{
+  "name": "polyWidget",
+  "authors": [
+    "ArickVigas <iarick.vigasi@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "axios": "^0.9.1",
+    "es6-promise": "^3.2.2"
+  }
+}

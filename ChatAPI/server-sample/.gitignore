@@ -1,0 +1,14 @@
+/.idea
+/.vs/config
+/bin
+/node_modules
+/obj
+/typings
+*.dat
+*.js
+*.map
+npm-debug.log
+
+
+!login.js
+reference.js

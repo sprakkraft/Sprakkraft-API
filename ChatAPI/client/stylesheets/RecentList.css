@@ -1,0 +1,104 @@
+﻿.conversations {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    list-style-image: none;
+    list-style-type: none;
+    list-style-position:outside;
+    overflow: auto;
+    padding: 0;
+}
+
+.conversation {
+    position: relative;
+    height: 47px;
+    clear: both;
+    padding-left: 10px;
+}
+
+.conversation.active {
+    background-color: #C7EDFC;
+}
+
+.avatar-container {
+    padding-top: 5px;
+    float: left;
+    display: block;
+    min-height: 36px;
+}
+
+.avatar {
+    width: 36px;
+    border-radius: 50%;
+}
+
+.avatar.no-avatar {
+    height: 36px;
+    background-image: url('../images/no_avatar.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.group .avatar.no-avatar {
+    background-image: url('../images/no_avatar_group.svg');
+}
+
+.username-container {
+    float: left;
+    padding-left: 8px;
+    width: 175px;
+}
+
+.username-container .username {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 0.8em;
+}
+
+.unread-messages-count {
+    color: #FF8C00;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    font-size: 0.9em;
+    display: none;
+}
+
+.conversations .user-status-icon {
+    display: none;
+    border-radius: 50%;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 35px;
+    top: 30px;
+    border: 2px solid white;
+}
+
+.conversations .user-status-icon.online {
+    display: inline;
+    background-color: #7FBA00;
+}
+
+.conversations .user-status-icon.offline {
+    display: block;
+    background-color: #7FBA00;
+}
+
+.conversations .user-status-icon.offline:before {
+    content: "";
+    display: block;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    background-color: white;
+}
