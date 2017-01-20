@@ -1,4 +1,4 @@
-
+﻿
 ## Authorization
 
 Before using Språkkraft public API, you need to register as a client with Språkkraft.
@@ -67,6 +67,10 @@ Applications should verify that the value associated with the token_type key of 
 
 ##Load Limits
 
-Default load limits are imposed on totl number of requests with your client code for every 5-minute time window. If your needs exceed tese limits, please describe them in an email to api@sprakkraft.org.
+Default load limits listed below are imposed on total number of requests with your client code for every 5-minute time window. If your needs exceed these limits, please describe them in an email to api@sprakkraft.org.
 
-....TBD...
+Total number of characters in analyze requests sent during the 5 minute time window: 50,000
+Number of translation requests sent during the 5 minute time window: 500
+Number of chat login requests sent during the 5 minute time window: 50
+
+
