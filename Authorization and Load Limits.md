@@ -70,7 +70,9 @@ Applications should verify that the value associated with the token_type key of 
 Default load limits listed below are imposed on total number of requests with your client code for every 5-minute time window. If your needs exceed these limits, please describe them in an email to api@sprakkraft.org.
 
 Total number of characters in analyze requests sent during the 5 minute time window: 50,000
+
 Number of translation requests sent during the 5 minute time window: 500
-Number of chat login requests sent during the 5 minute time window: 50
+ 
+Number of chat login requests sent during the 5 minute time window: 50 
 
 
