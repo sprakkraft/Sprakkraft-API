@@ -1,4 +1,5 @@
-﻿[<img src="iis.png">](https://www.iis.se/) 
+﻿[<img src="iis.png">](https://www.iis.se/)
+
 [Internetfonden, Internetstiftelsen i Sverige](https://www.iis.se/)
 
 Documentation and sample code provided here for using the service is released under MIT license.
