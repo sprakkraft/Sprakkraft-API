@@ -1,4 +1,4 @@
-﻿[<img style="width:48px;height:48px;position:relative" src="https://www.iis.se/docs/iis_logo.png"><span style="top:25px;position:absolute;font-size:22px;padding-left:10px"> Internetfonden, Internetstiftelsen i Sverige</span>](https://www.iis.se/)
+﻿[<img style="width:48px;height:48px;position:relative" src="iis.png"><span style="top:25px;position:absolute;font-size:22px;padding-left:10px"> Internetfonden, Internetstiftelsen i Sverige</span>](https://www.iis.se/)
 
 Documentation and sample code provided here for using the service is released under MIT license.
 The service itself is free to use after due authorization process with load limitations 
