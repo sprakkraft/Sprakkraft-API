@@ -1,3 +1,4 @@
+[<img style="width:48px;height:48px;position:relative" src="https://www.iis.se/docs/iis_logo.png"><span style="top:25px;position:absolute;font-size:22px;padding-left:10px"> Internetfonden, Internetstiftelsen i Sverige</span>](https://www.iis.se/)
 
 ## Overview
 

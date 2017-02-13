@@ -1,3 +1,5 @@
+[<img style="width:48px;height:48px;position:relative" src="https://www.iis.se/docs/iis_logo.png"><span style="top:25px;position:absolute;font-size:22px;padding-left:10px"> Internetfonden, Internetstiftelsen i Sverige</span>](https://www.iis.se/)
+
 # Dictionary API
 
 The API analyzes Swedish sentences and translates individual words and phrases to the following languages:
