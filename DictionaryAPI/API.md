@@ -1,4 +1,4 @@
-﻿[<img src="iis.png">](https://www.iis.se/)
+﻿[<img src="../iis.png">](https://www.iis.se/)
 
 [Internetfonden, Internetstiftelsen i Sverige](https://www.iis.se/)
 
